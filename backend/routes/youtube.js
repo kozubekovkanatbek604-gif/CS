@@ -1,7 +1,7 @@
 import express from 'express';
 import { v4 as uuid } from 'uuid';
 import { requireAuth } from '../middleware/auth.js';
-import { getYoutubeLessons, saveYoutubeLessons } from '../services/jsonDb.js';
+import { getYoutubeLessons, saveYoutubeLessons } from '../services/db.js';
 
 const router = express.Router();
 

@@ -1,5 +1,7 @@
 FROM node:20-alpine
 
+RUN apk add --no-cache python3 make g++
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -16,4 +18,4 @@ ENV NODE_ENV=production
 
 EXPOSE 8080
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]

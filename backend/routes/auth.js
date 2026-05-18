@@ -1,6 +1,6 @@
 import express from 'express';
 import { clearAuthCookie, createAuthCookie, requireAuth } from '../middleware/auth.js';
-import { getAdmin } from '../services/jsonDb.js';
+import { getAdmin } from '../services/db.js';
 
 const router = express.Router();
 

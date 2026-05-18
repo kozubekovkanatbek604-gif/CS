@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import authRoutes from './routes/auth.js';
 import booksRoutes from './routes/books.js';
 import youtubeRoutes from './routes/youtube.js';
-import { initDb } from './services/jsonDb.js';
+import { initDb } from './services/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

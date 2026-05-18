@@ -1,4 +1,4 @@
-# Имя должно совпадать с App name в панели Fly (латиница, дефисы).
+# Имя должно совпадать с App name в панели Fly.
 app = 'cs-cybersecurity-website'
 primary_region = 'ams'
 
@@ -7,6 +7,10 @@ primary_region = 'ams'
 [env]
   NODE_ENV = 'production'
   PORT = '8080'
+  DATABASE_PATH = '/data/app.db'
+
+[deploy]
+  strategy = 'rolling'
 
 [http_service]
   internal_port = 8080
@@ -21,9 +25,8 @@ primary_region = 'ams'
   cpu_kind = 'shared'
   cpus = 1
 
-# Volume: создайте в Fly Dashboard → Storage → Create volume
-# (name: data, region: ams, size: 1 GB), затем раскомментируйте и redeploy:
-#
-# [mounts]
-#   source = 'data'
-#   destination = '/app/backend/data'
+# SQLite на volume. initial_size — том создаётся при первом fly deploy / launch.
+[mounts]
+  source = 'data'
+  destination = '/data'
+  initial_size = '1gb'
