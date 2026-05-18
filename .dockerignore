@@ -1,0 +1,8 @@
+node_modules
+frontend/dist
+.git
+.fly
+*.log
+.env
+.env.*
+backend/data/*.json

@@ -1,0 +1,25 @@
+# Имя app замените на своё (как в панели Fly), затем: fly apps rename <новое-имя>
+app = 'cs-cybersecurity-website'
+primary_region = 'ams'
+
+[build]
+
+[env]
+  NODE_ENV = 'production'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '256mb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[mounts]
+  source = 'data'
+  destination = '/app/backend/data'
