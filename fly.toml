@@ -1,4 +1,4 @@
-# Имя app замените на своё (как в панели Fly), затем: fly apps rename <новое-имя>
+# Имя должно совпадать с App name в панели Fly (латиница, дефисы).
 app = 'cs-cybersecurity-website'
 primary_region = 'ams'
 
@@ -6,6 +6,7 @@ primary_region = 'ams'
 
 [env]
   NODE_ENV = 'production'
+  PORT = '8080'
 
 [http_service]
   internal_port = 8080
@@ -16,10 +17,13 @@ primary_region = 'ams'
   processes = ['app']
 
 [[vm]]
-  memory = '256mb'
+  memory = '512mb'
   cpu_kind = 'shared'
   cpus = 1
 
-[mounts]
-  source = 'data'
-  destination = '/app/backend/data'
+# Volume: создайте в Fly Dashboard → Storage → Create volume
+# (name: data, region: ams, size: 1 GB), затем раскомментируйте и redeploy:
+#
+# [mounts]
+#   source = 'data'
+#   destination = '/app/backend/data'
