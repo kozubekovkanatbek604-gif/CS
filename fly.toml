@@ -1,16 +1,25 @@
-# Имя должно совпадать с App name в панели Fly.
+# fly.toml app configuration file generated for cs-cybersecurity-website on 2026-05-18T13:52:09Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
 app = 'cs-cybersecurity-website'
 primary_region = 'ams'
 
 [build]
 
-[env]
-  NODE_ENV = 'production'
-  PORT = '8080'
-  DATABASE_PATH = '/data/app.db'
-
 [deploy]
   strategy = 'rolling'
+
+[env]
+  DATABASE_PATH = '/data/app.db'
+  NODE_ENV = 'production'
+  PORT = '8080'
+
+[[mounts]]
+  source = 'data'
+  destination = '/data'
+  initial_size = '1gb'
 
 [http_service]
   internal_port = 8080
@@ -24,9 +33,4 @@ primary_region = 'ams'
   memory = '512mb'
   cpu_kind = 'shared'
   cpus = 1
-
-# SQLite на volume. initial_size — том создаётся при первом fly deploy / launch.
-[mounts]
-  source = 'data'
-  destination = '/data'
-  initial_size = '1gb'
+  memory_mb = 512
