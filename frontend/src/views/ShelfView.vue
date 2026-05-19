@@ -18,7 +18,7 @@
 
   <section class="section shelf-wrap">
     <ShelfRow v-for="(row, index) in rows" :key="index" :items="row" :type="activeType" />
-    <p v-if="!activeItems.length" class="empty-state">{{ emptyMessage }}</p>
+    <p v-if="!filteredItems.length" class="empty-state">{{ emptyMessage }}</p>
   </section>
 </template>
 
@@ -26,23 +26,35 @@
 import { computed, onMounted, ref } from 'vue';
 import { api } from '../api/client.js';
 import ShelfRow from '../components/ShelfRow.vue';
+import { filterShelfItems, shelfSearchQuery } from '../composables/useShelfSearch.js';
 
 const activeType = ref('videos');
 const books = ref([]);
 const lessons = ref([]);
 
 const activeItems = computed(() => (activeType.value === 'books' ? books.value : lessons.value));
-const emptyMessage = computed(() => (
-  activeType.value === 'books'
-    ? 'На полке пока нет книг.'
-    : 'На полке пока нет уроков.'
+const filteredItems = computed(() => filterShelfItems(
+  activeItems.value,
+  activeType.value,
+  shelfSearchQuery.value
 ));
+const emptyMessage = computed(() => {
+  if (shelfSearchQuery.value.trim()) {
+    return activeType.value === 'books'
+      ? 'Книги по запросу не найдены.'
+      : 'Видео по запросу не найдены.';
+  }
+
+  return activeType.value === 'books'
+    ? 'На полке пока нет книг.'
+    : 'На полке пока нет уроков.';
+});
 
 const rows = computed(() => {
   const result = [];
 
-  for (let index = 0; index < activeItems.value.length; index += 4) {
-    result.push(activeItems.value.slice(index, index + 4));
+  for (let index = 0; index < filteredItems.value.length; index += 4) {
+    result.push(filteredItems.value.slice(index, index + 4));
   }
 
   return result;
